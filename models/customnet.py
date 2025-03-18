@@ -15,7 +15,7 @@ class CustomNet(nn.Module):
         self.conv4 = nn.Conv2d(256, 512, kernel_size=3, padding=1, stride=2) # [B, 512, 14, 14]
         self.conv5 = nn.Conv2d(512, 1024, kernel_size=3, padding=1, stride=2) # [B, 1024, 7, 7]
 
-        # Flatten ALL Dimension, BUT Starting from the 3rd (2+1):
+        # Flatten ALL Dimensions, BUT Starting from the 3rd (2+1):
         # FROM [B, 1024, 7, 7] TO [B, 1024, 49]
         self.flatten = nn.Flatten(2)
 
@@ -30,7 +30,7 @@ class CustomNet(nn.Module):
         x = self.conv5(x).relu()
 
         # Average EACH 1024-Channel Vector
-        # over the 49 Spatial Positions
+        # over the 49 Spatial Positions (-1/LAST Dimension)
         # FROM [B, 1024, 49] TO [B, 1024]
         x = self.flatten(x).mean(-1)
 
